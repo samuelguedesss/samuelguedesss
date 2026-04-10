@@ -60,13 +60,17 @@
 
 <div align="center">
   <a href="https://github.com/samuelguedesss/purchase-approval-system">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=samuelguedesss&repo=purchase-approval-system&theme=tokyonight&cache_seconds=1800&show_owner=true" />
+    <img src="https://github-readme-stats-zj3j.vercel.app/api/pin/?username=samuelguedesss&repo=purchase-approval-system&theme=tokyonight" />
   </a>
   &nbsp;
   <a href="https://github.com/samuelguedesss/helpdesk-ticket-system">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=samuelguedesss&repo=helpdesk-ticket-system&theme=tokyonight&cache_seconds=1800&show_owner=true" />
+    <img src="https://github-readme-stats-zj3j.vercel.app/api/pin/?username=samuelguedesss&repo=helpdesk-ticket-system&theme=tokyonight" />
   </a>
 </div>
+
+<br/>
+
+---
 
 ## 📊 Estatísticas
 
@@ -74,12 +78,12 @@
   <img
     alt="GitHub Stats"
     height="180"
-    src="https://github-readme-stats.vercel.app/api?username=samuelguedesss&show_icons=true&theme=tokyonight&include_all_commits=true&locale=pt-br&cache_seconds=86400"
+    src="https://github-readme-stats-zj3j.vercel.app/api?username=samuelguedesss&show_icons=true&theme=tokyonight&include_all_commits=true&locale=pt-br"
   />
   <img
     alt="Top Langs"
     height="180"
-    src="https://github-readme-stats.vercel.app/api/top-langs/?username=samuelguedesss&theme=tokyonight&layout=compact&custom_title=Tecnologias&langs_count=9&cache_seconds=86400"
+    src="https://github-readme-stats-zj3j.vercel.app/api/top-langs/?username=samuelguedesss&theme=tokyonight&layout=compact&custom_title=Tecnologias&langs_count=9"
   />
 </div>
 
