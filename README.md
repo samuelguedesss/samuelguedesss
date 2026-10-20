@@ -78,7 +78,7 @@
   <img
     alt="GitHub Stats"
     height="180"
-    src="https://github-readme-stats-zj3j.vercel.app/api?username=samuelguedesss&show_icons=true&theme=tokyonight&include_all_commits=true&locale=pt-br"
+    src="https://github-readme-stats-zj3j.vercel.app/api?username=samuelguedesss&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true&locale=pt-br"
   />
   <img
     alt="Top Langs"
@@ -90,7 +90,7 @@
 <br/>
 
 <div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=samuelguedesss&theme=tokyo-night&hide_border=true" />
+  <img src="https://streak-stats.demolab.com?user=samuelguedesss&theme=tokyonight&locale=pt_BR&hide_border=true" />
 </div>
 
 ---
