@@ -1,0 +1,37 @@
+name: Update profile artwork
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-artwork
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install image tools
+        run: python -m pip install -r scripts/requirements.txt
+      - name: Refresh real GitHub contributions
+        run: python scripts/build_profile.py --refresh
+      - name: Save updated artwork
+        run: |
+          git add assets/avi-ascii.svg assets/info-card.svg assets/info-card-mobile.svg assets/contrib-heatmap.svg data/contributions.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Update profile contribution artwork'
+          git push

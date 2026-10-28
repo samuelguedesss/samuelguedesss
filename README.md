@@ -1,2 +1,52 @@
-<!-- Original terminal artwork. Regenerate: python3 scripts/build_profile.py -->
-<p align="center"><a href="https://portifolio-samuel-svm7.vercel.app/"><picture><source media="(max-width:600px)" srcset="./assets/terminal-overview-mobile.svg"><img align="top" src="./assets/terminal-overview.svg" width="100%" alt="Samuel Guedes. Full stack com foco em back-end. Desenvolvo APIs e aplicações web com autenticação, permissões e regras de negócio. ADS na Impacta. Técnico em Informática pela ETEC. Node.js, Express, JavaScript, Java, MySQL, SQL, Sequelize, React, Material UI, HTML e CSS."></picture></a><a href="https://github.com/samuelguedesss/purchase-approval-system"><picture><source media="(max-width:600px)" srcset="./assets/terminal-purchase-mobile.svg"><img align="top" src="./assets/terminal-purchase.svg" width="50%" alt="Purchase Approval System. Aprovações condicionais e permissões por departamento. Node.js, React, Sequelize e MySQL. Abrir repositório."></picture></a><a href="https://github.com/samuelguedesss/helpdesk-ticket-system"><picture><source media="(max-width:600px)" srcset="./assets/terminal-helpdesk-mobile.svg"><img align="top" src="./assets/terminal-helpdesk.svg" width="50%" alt="Help Desk Ticket System. Acesso por perfil, chat com polling HTTP e aprovação financeira. Node.js, React, JWT e MySQL. Abrir repositório."></picture></a><a href="https://portifolio-samuel-svm7.vercel.app/"><picture><source media="(max-width:600px)" srcset="./assets/terminal-portfolio-mobile.svg"><img align="top" src="./assets/terminal-portfolio.svg" width="33.33%" alt="Portfólio"></picture></a><a href="https://www.linkedin.com/in/samuel-fguedes/"><picture><source media="(max-width:600px)" srcset="./assets/terminal-linkedin-mobile.svg"><img align="top" src="./assets/terminal-linkedin.svg" width="33.33%" alt="LinkedIn"></picture></a><a href="mailto:samuelguedes473@gmail.com"><picture><source media="(max-width:600px)" srcset="./assets/terminal-email-mobile.svg"><img align="top" src="./assets/terminal-email.svg" width="33.33%" alt="E-mail"></picture></a></p>
+<div align="center">
+
+<h3><code>samuel@github ~ $ whoami</code></h3>
+
+<p align="center">
+  <img src="./assets/avi-ascii.svg" width="350" alt="Retrato ASCII de Samuel Guedes" />
+  <a href="https://portifolio-samuel-svm7.vercel.app/"><picture><source media="(max-width:600px)" srcset="./assets/info-card-mobile.svg"><img src="./assets/info-card.svg" width="463" alt="Samuel Guedes — full stack com foco em back-end; ADS na Impacta, técnico em Informática pela ETEC; Node.js, Express, JavaScript, Java, SQL, MySQL, Sequelize e React." /></picture></a>
+</p>
+
+<br>
+
+<h3><code>samuel@github ~ $ ./contributions.sh</code></h3>
+
+<img src="./assets/contrib-heatmap.svg" width="860" alt="Contribuições reais de Samuel Guedes nos últimos 365 dias, em tons de cobre" />
+
+<br><br>
+
+<details>
+<summary><code>samuel@github ~ $ cat stack.md</code></summary>
+
+<br>
+
+| Categoria | Tecnologias |
+|---|---|
+| **Linguagens** | JavaScript, Java, SQL, HTML, CSS |
+| **Back-end** | Node.js, Express, APIs REST |
+| **Autenticação e acesso** | JWT, RBAC, permissões por perfil |
+| **Banco de dados** | MySQL, Sequelize, modelagem de dados |
+| **Front-end** | React, Material UI |
+| **Ferramentas** | Git, GitHub, Figma |
+
+</details>
+
+<details>
+<summary><code>samuel@github ~ $ ls projects/</code></summary>
+
+<br>
+
+| Projeto | O que construí |
+|---|---|
+| [Purchase Approval System](https://github.com/samuelguedesss/purchase-approval-system) | Aprovações condicionais, permissões por departamento e autenticação JWT. |
+| [Help Desk Ticket System](https://github.com/samuelguedesss/helpdesk-ticket-system) | Chamados, controle de acesso, chat por polling HTTP e aprovação financeira. |
+
+</details>
+
+<br>
+
+<code>samuel@github ~ $ contact --all</code>
+
+[Portfólio](https://portifolio-samuel-svm7.vercel.app/) · [LinkedIn](https://www.linkedin.com/in/samuel-fguedes/) · [E-mail](mailto:samuelguedes473@gmail.com)
+
+</div>
