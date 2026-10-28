@@ -1,100 +1,56 @@
-<div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a1b27,100:70a5fd&height=200&section=header&text=Samuel%20Guedes&fontSize=50&fontColor=fff&animation=fadeIn&fontAlignY=38&desc=Desenvolvedor%20Full%20Stack&descAlignY=60&descAlign=50" />
-</div>
+<a href="https://portifolio-samuel-svm7.vercel.app/">
+  <picture>
+    <source media="(prefers-reduced-motion: reduce)" srcset="./assets/profile-cover.png">
+    <img src="./assets/profile-cover.gif" width="100%" alt="Samuel Guedes — desenvolvedor full stack com foco em back-end. APIs, dados e regras de negócio, em um visual preto e cobre com sistemas conectados.">
+  </picture>
+</a>
 
-<div align="center">
-  <a href="https://linkedin.com/in/samuelguedesss" target="_blank">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />
-  </a>
-  <a href="mailto:seuemail@gmail.com">
-    <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
-  </a>
-  <a href="https://github.com/samuelguedesss">
-    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" />
-  </a>
-</div>
+<p align="center">
+  <a href="https://portifolio-samuel-svm7.vercel.app/"><strong>Portfólio</strong></a>
+  &nbsp; / &nbsp;
+  <a href="https://www.linkedin.com/in/samuel-fguedes/">LinkedIn</a>
+  &nbsp; / &nbsp;
+  <a href="mailto:samuelguedes473@gmail.com">E-mail</a>
+</p>
 
-<br/>
+### Por trás da interface
 
-## 👨‍💻 Sobre mim
+Sou Samuel Guedes, desenvolvedor full stack com foco em **back-end, APIs REST e bancos de dados**. Nos meus projetos, conecto interfaces a regras de negócio: quem pode acessar, como uma aprovação avança e como os dados chegam à pessoa certa.
 
-```txt
-🎓  Análise e Desenvolvimento de Sistemas — Impacta
-🏫  Técnico em Informática — ETEC
-🚀  Foco em aplicações web completas e escaláveis
-🔐  Especialidade em autenticação JWT e controle de acesso (RBAC)
-🌱  Sempre aprendendo e evoluindo
-```
+Estudo **Análise e Desenvolvimento de Sistemas na Impacta** e tenho formação técnica em **Informática pela ETEC**. Sigo evoluindo com estudo, projetos pessoais e prática.
 
----
+### Sistemas em destaque
 
-## 🛠 Stack Principal
+<p>
+<a href="https://github.com/samuelguedesss/purchase-approval-system"><picture><source media="(prefers-reduced-motion: reduce)" srcset="./assets/purchase-approval.svg"><img src="./assets/purchase-approval.gif" width="49%" alt="Purchase Approval System: aprovações em até três etapas, fluxo condicional por valor e isolamento por departamento. React, Node.js, Express, Sequelize e MySQL."></picture></a>
+<a href="https://github.com/samuelguedesss/helpdesk-ticket-system"><picture><source media="(prefers-reduced-motion: reduce)" srcset="./assets/helpdesk.svg"><img src="./assets/helpdesk.gif" width="49%" alt="Help Desk Ticket System: chamados com controle de acesso por perfil, chat com polling HTTP e aprovação financeira. React, Node.js, Express, JWT e MySQL."></picture></a>
+</p>
 
-<div align="center">
-  <img alt="React" title="React" width="40px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" />
-  &nbsp;
-  <img alt="JavaScript" title="JavaScript" width="40px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" />
-  &nbsp;
-  <img alt="Node.js" title="Node.js" width="40px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" />
-  &nbsp;
-  <img alt="Express" title="Express" width="40px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg" />
-  &nbsp;
-  <img alt="MySQL" title="MySQL" width="40px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" />
-  &nbsp;
-  <img alt="Sequelize" title="Sequelize" width="40px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sequelize/sequelize-original.svg" />
-  &nbsp;
-  <img alt="HTML" title="HTML" width="40px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" />
-  &nbsp;
-  <img alt="CSS" title="CSS" width="40px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" />
-  &nbsp;
-  <img alt="Material UI" title="Material UI" width="40px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/materialui/materialui-original.svg" />
-  &nbsp;
-  <img alt="Git" title="Git" width="40px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" />
-  &nbsp;
-  <img alt="Python" title="Python" width="40px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" />
-</div>
+<details>
+<summary><strong>Explorar a lógica dos projetos</strong></summary>
 
----
+#### [Purchase Approval System](https://github.com/samuelguedesss/purchase-approval-system)
 
-## 🚀 Projetos em Destaque
+Uma requisição passa pelo coordenador do departamento, pelo gerente geral quando necessário e pelo financeiro. O fluxo muda conforme o valor da compra; as permissões e o departamento determinam o que cada pessoa pode ver e aprovar.
 
-<div align="center">
-  <a href="https://github.com/samuelguedesss/purchase-approval-system">
-    <img src="https://github-readme-stats-zj3j.vercel.app/api/pin/?username=samuelguedesss&repo=purchase-approval-system&theme=tokyonight" />
-  </a>
-  &nbsp;
-  <a href="https://github.com/samuelguedesss/helpdesk-ticket-system">
-    <img src="https://github-readme-stats-zj3j.vercel.app/api/pin/?username=samuelguedesss&repo=helpdesk-ticket-system&theme=tokyonight" />
-  </a>
-</div>
+`JWT` · `RBAC` · `Aprovação condicional` · `Sequelize` · `MySQL`
 
-<br/>
+#### [Help Desk Ticket System](https://github.com/samuelguedesss/helpdesk-ticket-system)
 
----
+Centraliza abertura, acompanhamento e resolução de chamados. Cada perfil tem sua visão do sistema, com chat por chamado, notificações e aprovação financeira para solicitações que exigem validação. O chat consulta novas mensagens por polling HTTP.
 
-## 📊 Estatísticas
+`APIs REST` · `RBAC` · `Chat e notificações` · `Upload de anexos` · `MySQL`
 
-<div align="center">
-  <img
-    alt="GitHub Stats"
-    height="180"
-    src="https://github-readme-stats-zj3j.vercel.app/api?username=samuelguedesss&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true&locale=pt-br"
-  />
-  <img
-    alt="Top Langs"
-    height="180"
-    src="https://github-readme-stats-zj3j.vercel.app/api/top-langs/?username=samuelguedesss&theme=tokyonight&layout=compact&custom_title=Tecnologias&langs_count=9"
-  />
-</div>
+</details>
 
-<br/>
+### Ferramentas que conectam tudo
 
-<div align="center">
-  <img src="https://streak-stats.demolab.com?user=samuelguedesss&theme=tokyonight&locale=pt_BR&hide_border=true" />
-</div>
+<img src="./assets/stack.svg" width="100%" alt="Back-end: Node.js, Express, JavaScript, Java. Dados: MySQL, SQL, Sequelize. Interface: React, Material UI, HTML, CSS. Fluxo de trabalho: Git, JWT, APIs REST, RBAC.">
 
----
+### O que estou construindo
 
-<div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:70a5fd,100:1a1b27&height=120&section=footer" />
-</div>
+- **Regras de negócio claras:** fluxos de aprovação e permissões por perfil.
+- **Aplicações completas:** da modelagem dos dados à interface em React.
+- **Base técnica:** aprofundando Java, JavaScript e SQL.
+
+<a href="https://portifolio-samuel-svm7.vercel.app/"><img src="./assets/footer.svg" width="100%" alt="Conheça meus projetos no portfólio — Samuel Guedes."></a>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="202" viewBox="0 0 1120 202" role="img" aria-label="Minha stack de desenvolvimento">
+<title>Minha stack de desenvolvimento</title>
+<defs><radialGradient id="glow"><stop stop-color="#DFA16D" stop-opacity=".12"/><stop offset="1" stop-color="#DFA16D" stop-opacity="0"/></radialGradient></defs>
+<rect x="1" y="1" width="1118" height="200" rx="18" fill="#101317" stroke="#37302A"/>
+<ellipse cx="1070" cy="40" rx="210" ry="180" fill="url(#glow)"/>
+<g font-family="Arial, Helvetica, sans-serif" fill="#F3EEE8"><text x="30" y="42" font-size="16" fill="#DFA16D" font-weight="400">Back-end</text><text x="225" y="42" font-size="16" fill="#F3EEE8" font-weight="400">Node.js · Express · JavaScript · Java</text><text x="30" y="85" font-size="16" fill="#DFA16D" font-weight="400">Dados</text><text x="225" y="85" font-size="16" fill="#F3EEE8" font-weight="400">MySQL · SQL · Sequelize</text><text x="30" y="128" font-size="16" fill="#DFA16D" font-weight="400">Interface</text><text x="225" y="128" font-size="16" fill="#F3EEE8" font-weight="400">React · Material UI · HTML · CSS</text><text x="30" y="171" font-size="16" fill="#DFA16D" font-weight="400">Fundamentos</text><text x="225" y="171" font-size="16" fill="#F3EEE8" font-weight="400">Git · APIs REST · JWT · RBAC</text></g></svg>
