@@ -1,5 +1,5 @@
 # Artes do perfil
 
-Composição contínua em preto e cobre, com versões para celular e computador. Os links permanecem separados por seção; o texto é estático e somente os pontos orbitais se movem. A preferência por movimento reduzido é respeitada.
+Apresentação compacta em preto e cobre: introdução, sobre mim, tecnologias, dois projetos lado a lado e contatos. Versões próprias para computador e celular. Texto estático, movimento apenas nas órbitas.
 
-Para regenerar: `python3 scripts/build_profile.py` (Pillow).
+Regenerar: `python3 scripts/build_profile.py` (Pillow).
