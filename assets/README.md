@@ -1,10 +1,5 @@
 # Artes do perfil
 
-Identidade visual original de Samuel Guedes: preto, cobre e sistemas conectados.
+Composição contínua em preto e cobre, com versões para celular e computador. Os links permanecem separados por seção; o texto é estático e somente os pontos orbitais se movem. A preferência por movimento reduzido é respeitada.
 
-- `profile-cover.gif`: capa animada com terminal e órbitas.
-- `profile-cover.png`: alternativa com movimento reduzido.
-- Cards em GIF e SVG: sistemas de aprovação de compras e chamados.
-- `stack.svg` e `footer.svg`: tecnologias e acesso ao portfólio.
-
-Os arquivos são hospedados neste repositório, sem serviços externos para gerar imagens.
+Para regenerar: `python3 scripts/build_profile.py` (Pillow).

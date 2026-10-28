@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="108" viewBox="0 0 1120 108" role="img" aria-label="Conheça meu portfólio">
-<title>Conheça meu portfólio</title>
-<defs><radialGradient id="glow"><stop stop-color="#DFA16D" stop-opacity=".12"/><stop offset="1" stop-color="#DFA16D" stop-opacity="0"/></radialGradient></defs>
-<rect x="1" y="1" width="1118" height="106" rx="18" fill="#101317" stroke="#37302A"/>
-<ellipse cx="1070" cy="40" rx="210" ry="180" fill="url(#glow)"/>
-<g font-family="Arial, Helvetica, sans-serif" fill="#F3EEE8"><text x="32" y="44" font-size="23" fill="#F3EEE8" font-weight="500">Vamos conectar ideias a sistemas.</text><text x="32" y="77" font-size="14" fill="#DFA16D" font-weight="400" font-family="Menlo, Consolas, monospace">portifolio-samuel-svm7.vercel.app</text><text x="981" y="62" font-size="25" fill="#DFA16D" font-weight="400" font-family="Menlo, Consolas, monospace">[ sg. ]</text></g></svg>

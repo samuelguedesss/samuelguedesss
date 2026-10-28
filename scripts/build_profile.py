@@ -1,183 +1,151 @@
-"""Generate original profile artwork: python3 scripts/build_profile.py.
+"""Build a continuous, responsive GitHub profile; Python 3 + Pillow.
 
-Requires Pillow (scripts/requirements.txt). No network or credentials needed.
+Text stays visible and static. Only decorative orbit marks move, with
+prefers-reduced-motion support. Each seamless slice remains a real link.
 """
 from pathlib import Path
-import math
 from html import escape
-from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageChops
+from PIL import ImageFont
+import re
 
-ASSETS = Path(__file__).resolve().parents[1] / "assets"
-ASSETS.mkdir(exist_ok=True)
-BG, PANEL, COPPER, TEXT, MUTED, LINE = "#080A0D", "#101317", "#DFA16D", "#F3EEE8", "#AFA9A3", "#37302A"
-W, H = 1200, 520
-
-
-def font(size, mono=False, bold=False):
-    names = (["/System/Library/Fonts/Menlo.ttc", "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"] if mono else
-             [f"/System/Library/Fonts/Supplemental/Arial{' Bold' if bold else ''}.ttf",
-              f"/usr/share/fonts/truetype/dejavu/DejaVuSans{'-Bold' if bold else ''}.ttf"])
-    for name in names:
-        if Path(name).exists():
-            return ImageFont.truetype(name, size)
-    raise RuntimeError("Install Arial/Menlo or DejaVu Sans/Mono to regenerate artwork.")
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / 'assets'
+OUT.mkdir(exist_ok=True)
+BG, FG, COPPER, MUTED, RULE = '#090b0e', '#f2eee9', '#dfa16d', '#b8b1a9', '#3d3027'
+FONT = '/System/Library/Fonts/Supplemental/Arial.ttf'
+if not Path(FONT).exists():
+    FONT = '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
 
 
-F = {k: font(*v) for k, v in {
-    "logo": (25, True, False), "meta": (12, True, False), "name": (69, False, True),
-    "headline": (27, False, False), "body": (18, False, False), "chip": (14, True, False),
-    "terminal": (13, True, False), "core": (46, True, False),
-}.items()}
+def t(x,y,label,size=24,color=FG,bold=False,mono=False):
+    face='Menlo, Consolas, monospace' if mono else 'Arial, Helvetica, sans-serif'
+    return f'<text x="{x}" y="{y}" fill="{color}" font-size="{size}" font-weight="{600 if bold else 400}" font-family="{face}">{escape(label)}</text>'
 
 
-def ease(value):
-    return 1 - (1 - max(0, min(1, value))) ** 3
+def paragraph(label,x,y,width,size=24,leading=35,color=MUTED):
+    f=ImageFont.truetype(FONT,size)
+    words=label.split(); lines=[]; line=''
+    for word in words:
+        trial=(line+' '+word).strip()
+        if f.getlength(trial)>width and line:
+            lines.append(line);line=word
+        else:
+            line=trial
+    if line:lines.append(line)
+    return ''.join(t(x,y+i*leading,line,size,color) for i,line in enumerate(lines)),y+len(lines)*leading
 
 
-def cover(t, still=False):
-    im = Image.new("RGB", (W, H), BG)
-    d = ImageDraw.Draw(im)
-    for x in range(0, W, 48):
-        d.line((x, 0, x, H), fill="#121519")
-    for y in range(0, H, 48):
-        d.line((0, y, W, y), fill="#121519")
-    glow = Image.new("RGB", (W, H), "black")
-    ImageDraw.Draw(glow).ellipse((735, 65, 1145, 465), fill="#382215")
-    im = ImageChops.add(im, glow.filter(ImageFilter.GaussianBlur(65)))
-    d = ImageDraw.Draw(im)
-    d.rounded_rectangle((1, 1, W-2, H-2), radius=24, outline="#3E3025", width=2)
-    d.text((44, 27), "[ sg. ]", font=F["logo"], fill=COPPER)
-    d.text((174, 35), "FULL STACK / BACK-END FOCUS", font=F["meta"], fill=MUTED)
-    d.text((986, 35), "SAMUEL GUEDES", font=F["meta"], fill=MUTED)
-    d.line((44, 76, 1156, 76), fill=LINE)
-    d.text((46, 114), "Samuel", font=F["name"], fill=TEXT)
-    d.text((46, 186), "Guedes.", font=F["name"], fill=COPPER)
-    d.text((49, 282), "Por trás da interface.", font=F["headline"], fill=TEXT)
-    d.text((49, 320), "APIs, dados e regras de negócio.", font=F["body"], fill=MUTED)
-    cx, cy = 948, 258
-    for radius, col in [(168,"#493327"),(136,"#8C6040"),(100,"#443025")]:
-        d.ellipse((cx-radius,cy-radius,cx+radius,cy+radius),outline=col,width=1)
-    angle = (0 if still else t * math.tau / 8) - math.pi/2
-    for a, rad in [(angle,168),(angle+math.pi,136)]:
-        x,y=cx+math.cos(a)*rad,cy+math.sin(a)*rad
-        d.ellipse((x-4,y-4,x+4,y+4),fill=COPPER)
-    d.line((cx-184,cy,cx-163,cy),fill=COPPER,width=2)
-    d.line((cx+163,cy,cx+184,cy),fill=COPPER,width=2)
-    d.rounded_rectangle((cx-49,cy-49,cx+49,cy+49),radius=24,fill="#171513",outline="#B07C52",width=2)
-    d.text((cx-40,cy-31), "{ }",font=F["core"],fill=COPPER)
-    for i,(label,x,y) in enumerate([("API",861,102),("SQL",1056,287),("JWT",800,322)]):
-        p=1 if still else ease((t-i*.22)/.75)
-        if p<=0:
-            continue
-        chip=Image.new("RGBA",(90,60),(0,0,0,0))
-        cd=ImageDraw.Draw(chip)
-        cd.rounded_rectangle((1,1,86,53),radius=13,fill=PANEL,outline="#785236",width=1)
-        cd.text((28,18),label,font=F["chip"],fill=COPPER)
-        chip.putalpha(chip.getchannel("A").point(lambda a:round(a*p)))
-        im.paste(chip,(x,round(y+22*(1-p))),chip)
-    for i,(label,width) in enumerate([("REST APIs",144),("JWT / RBAC",158),("MySQL",120)]):
-        p=1 if still else ease((t-.35-i*.15)/.65)
-        if p<=0:
-            continue
-        x=[49,205,375][i]
-        layer=Image.new("RGBA",(width,45),(0,0,0,0))
-        ld=ImageDraw.Draw(layer)
-        ld.rounded_rectangle((0,0,width-1,39),radius=8,fill="#171615",outline="#58402D")
-        ld.text((14,11),label,font=F["chip"],fill=COPPER)
-        layer.putalpha(layer.getchannel("A").point(lambda a:round(a*p)))
-        im.paste(layer,(x,round(378+18*(1-p))),layer)
-    d=ImageDraw.Draw(im)
-    d.line((44,459,1156,459),fill=LINE)
-    d.text((49,480),"samuel@dev:~$",font=F["terminal"],fill=COPPER)
-    command="building useful systems"
-    count=len(command) if still else min(len(command),int(max(0,t-.35)*20))
-    d.text((179,480),command[:count],font=F["terminal"],fill=MUTED)
-    if still or int(t*2)%2==0:
-        x=179+d.textlength(command[:count],font=F["terminal"])
-        d.rectangle((x+3,481,x+9,494),fill=COPPER)
-    d.text((887,480),"JAVA / NODE.JS / SQL",font=F["meta"],fill=MUTED)
-    return im
+def rule(w):
+    return f'<path d="M44 1H{w-44}" stroke="{RULE}"/>'
 
 
-def svg_document(width, height, title, content):
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-label="{escape(title, quote=True)}">
-<title>{escape(title)}</title>
-<defs><radialGradient id="glow"><stop stop-color="#DFA16D" stop-opacity=".12"/><stop offset="1" stop-color="#DFA16D" stop-opacity="0"/></radialGradient></defs>
-<rect x="1" y="1" width="{width-2}" height="{height-2}" rx="18" fill="{PANEL}" stroke="{LINE}"/>
-<ellipse cx="{width-50}" cy="40" rx="210" ry="180" fill="url(#glow)"/>
-<g font-family="Arial, Helvetica, sans-serif" fill="{TEXT}">{content}</g></svg>'''
+def svg(w,h,content,title):
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="{escape(title)}">
+<title>{escape(title)}</title><style>text{{text-rendering:optimizeLegibility}}.orbit{{transform-box:fill-box;transform-origin:center;animation:turn 24s linear infinite}}@keyframes turn{{to{{transform:rotate(360deg)}}}}@media(prefers-reduced-motion:reduce){{.orbit{{animation:none}}}}</style>
+<rect width="{w}" height="{h}" fill="{BG}"/>{content}</svg>'''
 
 
-def text(x,y,label,size=16,fill=TEXT,mono=False,weight=400):
-    family=' font-family="Menlo, Consolas, monospace"' if mono else ''
-    return f'<text x="{x}" y="{y}" font-size="{size}" fill="{fill}" font-weight="{weight}"{family}>{escape(label)}</text>'
+def save(name,w,h,c,title,mobile):
+    (OUT/f'{name}{"-mobile" if mobile else ""}.svg').write_text(svg(w,h,c,title),encoding='utf-8')
 
 
-def project(filename, title, subtitle, lines, tags, nodes):
-    content=text(30,37,subtitle,11,COPPER,True)
-    content+=text(30,82,title[0],30,weight=600)+text(30,117,title[1],30,weight=600)
-    for i,line in enumerate(lines):
-        content+=text(30,153+i*23,line,16,MUTED)
-    content+='<path d="M46 229H510" fill="none" stroke="#785236"/>'
-    for x,label in zip([30,205,380],nodes):
-        content+=f'<rect x="{x}" y="209" width="150" height="40" rx="8" fill="#191714" stroke="#785236"/>'
-        content+=text(x+12,234,label,12,COPPER,True)
-    content+='<path d="M30 274H530" stroke="#37302A"/>'
-    content+=text(30,302,tags,11,MUTED,True)+text(30,335,"Ver código e documentação",14,COPPER)
-    (ASSETS/filename).write_text(svg_document(560,358,' '.join(title),content),encoding="utf-8")
-    # GIF cards retain their animation inside GitHub's image proxy.
-    card=Image.new('RGB',(560,358),PANEL)
-    d=ImageDraw.Draw(card)
-    d.rounded_rectangle((1,1,558,356),radius=18,outline=LINE)
-    d.text((30,25),subtitle,font=font(11,True),fill=COPPER)
-    for y,label in [(53,title[0]),(88,title[1])]:
-        d.text((30,y),label,font=font(30,bold=True),fill=TEXT)
-    for i,line in enumerate(lines):
-        d.text((30,138+i*23),line,font=font(16),fill=MUTED)
-    d.line((46,229,510,229),fill='#785236')
-    for x,label in zip([30,205,380],nodes):
-        d.rounded_rectangle((x,209,x+150,249),radius=8,fill='#191714',outline='#785236')
-        d.text((x+12,222),label,font=font(12,True),fill=COPPER)
-    d.line((30,274,530,274),fill=LINE)
-    d.text((30,291),tags,font=font(11,True),fill=MUTED)
-    d.text((30,321),'Ver código e documentação',font=font(14),fill=COPPER)
-    palette=card.quantize(colors=96)
-    frames=[]
-    for i in range(60):
-        p=ease((i/10-(.2 if filename=='helpdesk.svg' else 0))/.8)
-        base=Image.new('RGB',card.size,BG)
-        base.paste(Image.blend(Image.new('RGB',card.size,BG),card,p),(0,round((1-p)*16)))
-        if i>12:
-            draw=ImageDraw.Draw(base)
-            x=184+(i-13)%18/17*17
-            draw.ellipse((x-2,227,x+2,231),fill=COPPER)
-            x+=175
-            draw.ellipse((x-2,227,x+2,231),fill=COPPER)
-        frames.append(base.quantize(palette=palette,dither=Image.Dither.NONE))
-    frames[0].save(ASSETS/filename.replace('.svg','.gif'),save_all=True,append_images=frames[1:],duration=100,loop=0,optimize=True,disposal=1)
+def intro(mobile):
+    w=600 if mobile else 1000
+    body=27 if mobile else 25
+    c=t(44,49,'[ sg. ]',27,COPPER,mono=True)
+    c+=t(w-228,46,'Software engineer',16,MUTED)
+    c+=f'<path d="M44 78H{w-44}" stroke="{RULE}"/>'
+    name=72 if mobile else 84
+    c+=t(44,182,'Samuel',name,bold=True)+t(44,266,'Guedes.',name,COPPER,True)
+    # The orbit never contains, clips or moves any lettering.
+    cx,cy,r=(475,201,62) if mobile else (783,222,136)
+    for radius in [r,r*.73,r*.48]:
+        c+=f'<circle cx="{cx}" cy="{cy}" r="{radius}" fill="none" stroke="{RULE}"/>'
+    c+=f'<g class="orbit"><circle cx="{cx}" cy="{cy-r}" r="4" fill="{COPPER}"/><circle cx="{cx}" cy="{cy+r}" r="4" fill="{COPPER}"/><circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="none"/></g>'
+    c+=t(cx-28,cy+12,'{ }',36,COPPER,mono=True)
+    c+=t(44,332,'Por trás da interface.',36 if mobile else 39,FG,True)
+    c+=t(44,377,'APIs, dados e regras de negócio.',body,MUTED)
+    c+=t(44,432,'Full stack com foco em back-end',21 if mobile else 22,COPPER)
+    c+=f'<path d="M44 476H{w-44}" stroke="{RULE}"/>'
+    c+=t(44,531,'Sobre mim',32,FG,True)
+    p,y=paragraph('Conecto interfaces a regras de negócio: quem pode acessar, como uma aprovação avança e como os dados chegam à pessoa certa.',44,580,w-88,body,38)
+    c+=p
+    p,y=paragraph('Estudo Análise e Desenvolvimento de Sistemas na Impacta e tenho formação técnica em Informática pela ETEC.',44,y+24,w-88,body,38)
+    c+=p
+    save('profile-intro',w,y+58,c,'Samuel Guedes. Desenvolvedor full stack com foco em back-end. Sobre mim e formação.',mobile)
 
 
-def build():
-    cover(0,still=True).save(ASSETS/"profile-cover.png",optimize=True)
-    palette=cover(0,still=True).quantize(colors=128)
-    frames=[cover(i/10).quantize(palette=palette,dither=Image.Dither.NONE) for i in range(80)]
-    frames[0].save(ASSETS/"profile-cover.gif",save_all=True,append_images=frames[1:],duration=100,loop=0,optimize=True,disposal=1)
-    project("purchase-approval.svg",["Purchase Approval","System"],"REGRAS DE NEGÓCIO",
-            ["Aprovações em até três etapas.","Permissões por perfil e departamento."],
-            "REACT / NODE.JS / SEQUELIZE / MYSQL",["Requisição","Aprovação","Financeiro"])
-    project("helpdesk.svg",["Help Desk","Ticket System"],"SUPORTE CONECTADO",
-            ["Chamados, chat e notificações.","Acesso por perfil e aprovação financeira."],
-            "REACT / EXPRESS / JWT / MYSQL",["Chamado","Atendimento","Resolução"])
-    stack=''
-    for y,label,value in [(42,"Back-end","Node.js · Express · JavaScript · Java"),(85,"Dados","MySQL · SQL · Sequelize"),(128,"Interface","React · Material UI · HTML · CSS"),(171,"Fundamentos","Git · APIs REST · JWT · RBAC")]:
-        stack+=text(30,y,label,16,COPPER)+text(225,y,value,16,TEXT)
-    (ASSETS/"stack.svg").write_text(svg_document(1120,202,"Minha stack de desenvolvimento",stack),encoding="utf-8")
-    footer=text(32,44,"Vamos conectar ideias a sistemas.",23,TEXT,weight=500)
-    footer+=text(32,77,"portifolio-samuel-svm7.vercel.app",14,COPPER,True)+text(981,62,"[ sg. ]",25,COPPER,True)
-    (ASSETS/"footer.svg").write_text(svg_document(1120,108,"Conheça meu portfólio",footer),encoding="utf-8")
-    for p in sorted(ASSETS.iterdir()):
-        print(f"{p.name}: {p.stat().st_size:,} bytes")
+def project(mobile,helpdesk=False):
+    w=600 if mobile else 1000
+    c=rule(w)
+    c+=t(44,53,'Sistema de chamados' if helpdesk else 'Sistema de aprovação de compras',22,COPPER)
+    title=['Help Desk Ticket','System'] if helpdesk else ['Purchase Approval','System']
+    c+=t(44,114,title[0],42,FG,True)+t(44,164,title[1],42,FG,True)
+    body=27 if mobile else 25
+    desc=('Chamados com acesso por perfil, aprovação financeira e chat integrado com polling HTTP.' if helpdesk else 'Aprovações em até três etapas, com fluxo condicional por valor e isolamento por departamento.')
+    p,y=paragraph(desc,44,216,w-88,body,38)
+    c+=p
+    tags=['React · Node.js · Express','JWT · MySQL'] if helpdesk else ['React · Node.js · Express','Sequelize · MySQL']
+    if mobile:
+        for i,s in enumerate(tags):c+=t(44,y+27+i*34,s,23,COPPER)
+        y+=72
+    else:
+        c+=t(44,y+29,' · '.join(tags),22,COPPER);y+=42
+    c+=t(44,y+42,'Abrir repositório e documentação',24,FG)
+    c+=f'<path d="M{w-86} {y+26}l14 14-14 14" fill="none" stroke="{COPPER}" stroke-width="2"/>'
+    save('profile-helpdesk' if helpdesk else 'profile-purchase',w,y+86,c,('Help Desk Ticket System — chamados, chat e permissões.' if helpdesk else 'Purchase Approval System — fluxo de aprovação e regras de negócio.')+' Clique para abrir o repositório.',mobile)
 
 
-if __name__=="__main__":
-    build()
+def stack(mobile):
+    w=600 if mobile else 1000
+    c=rule(w)+t(44,61,'Tecnologias que conectam tudo',31 if mobile else 34,FG,True)
+    y=120
+    rows=[('Back-end','Node.js · Express · JavaScript · Java'),('Dados','MySQL · SQL · Sequelize'),('Interface','React · Material UI · HTML · CSS'),('Fundamentos','Git · APIs REST · JWT · RBAC')]
+    for label,value in rows:
+        if mobile:
+            c+=t(44,y,label,26,COPPER)
+            p,ny=paragraph(value,44,y+39,w-88,25,34,FG);c+=p;y=ny+34
+        else:
+            c+=t(44,y,label,24,COPPER)+t(270,y,value,24,FG);y+=55
+    c+=f'<path d="M44 {y+4}H{w-44}" stroke="{RULE}"/>'
+    c+=t(44,y+65,'Vamos conectar ideias a sistemas.',29 if mobile else 34,FG,True)
+    c+=t(44,y+106,'Projetos, trajetória e contato no meu portfólio.',22 if mobile else 24,MUTED)
+    save('profile-stack',w,y+150,c,'Stack: Node.js, Express, JavaScript, Java, MySQL, SQL, Sequelize, React, Material UI, HTML, CSS, Git, APIs REST, JWT e RBAC. Conheça meu portfólio.',mobile)
+
+
+def contact(label,filename):
+    # Three linked slices form a single footer, including on phones.
+    c=f'<rect x="0" y="0" width="333" height="140" fill="#17130f"/>'
+    c+=t(36,82,label,36,COPPER)
+    c+='<path d="M282 66l10 10-10 10" fill="none" stroke="#dfa16d" stroke-width="2"/>'
+    (OUT/f'{filename}.svg').write_text(svg(333,140,c,label),encoding='utf-8')
+
+
+def main():
+    for mobile in [False,True]:
+        intro(mobile);project(mobile);project(mobile,True);stack(mobile)
+    for label,name in [('Portfólio','link-portfolio'),('LinkedIn','link-linkedin'),('E-mail','link-email')]:contact(label,name)
+    alt={
+        'profile-intro':'Samuel Guedes. Desenvolvedor full stack com foco em back-end, APIs REST e bancos de dados. Estudo ADS na Impacta e tenho formação técnica em Informática pela ETEC.',
+        'profile-purchase':'Purchase Approval System. Aprovações em até três etapas, fluxo condicional por valor e isolamento por departamento. React, Node.js, Express, Sequelize e MySQL. Abrir repositório.',
+        'profile-helpdesk':'Help Desk Ticket System. Chamados com controle de acesso por perfil, aprovação financeira e chat com polling HTTP. React, Node.js, Express, JWT e MySQL. Abrir repositório.',
+        'profile-stack':'Back-end: Node.js, Express, JavaScript e Java. Dados: MySQL, SQL e Sequelize. Interface: React, Material UI, HTML e CSS. Fundamentos: Git, APIs REST, JWT e RBAC. Conheça meu portfólio.'}
+    portfolio='https://portifolio-samuel-svm7.vercel.app/'
+    links=[('profile-intro',portfolio),('profile-purchase','https://github.com/samuelguedesss/purchase-approval-system'),('profile-helpdesk','https://github.com/samuelguedesss/helpdesk-ticket-system'),('profile-stack',portfolio)]
+    parts=['<!-- Original, continuous artwork. Regenerate: python3 scripts/build_profile.py -->\n<p align="center">']
+    for name,url in links:
+        parts.append(f'<a href="{url}"><picture><source media="(max-width: 600px)" srcset="./assets/{name}-mobile.svg"><img align="top" src="./assets/{name}.svg" width="100%" alt="{alt[name]}"></picture></a>')
+    for label,name,url in [('Portfólio','link-portfolio',portfolio),('LinkedIn','link-linkedin','https://www.linkedin.com/in/samuel-fguedes/'),('E-mail','link-email','mailto:samuelguedes473@gmail.com')]:
+        parts.append(f'<a href="{url}"><img align="top" src="./assets/{name}.svg" width="33.33%" alt="{label}"></a>')
+    parts.append('</p>\n')
+    # No inter-image whitespace: prevents inline baseline gaps and hard breaks.
+    (ROOT/'README.md').write_text(''.join(parts),encoding='utf-8')
+    (OUT/'README.md').write_text('# Artes do perfil\n\nComposição contínua em preto e cobre, com versões para celular e computador. Os links permanecem separados por seção; o texto é estático e somente os pontos orbitais se movem. A preferência por movimento reduzido é respeitada.\n\nPara regenerar: `python3 scripts/build_profile.py` (Pillow).\n',encoding='utf-8')
+    # Remove only generated files from the superseded design.
+    for name in ['profile-cover.gif','profile-cover.png','purchase-approval.gif','purchase-approval.svg','helpdesk.gif','helpdesk.svg','stack.svg','footer.svg']:
+        p=OUT/name
+        if p.exists():p.unlink()
+    print('Generated desktop/mobile sections and linked footer.')
+
+
+if __name__=='__main__':main()
