@@ -1,5 +1,5 @@
 # Artes do perfil
 
-Apresentação compacta em preto e cobre: introdução, sobre mim, tecnologias, dois projetos lado a lado e contatos. Versões próprias para computador e celular. Texto estático, movimento apenas nas órbitas.
+Terminal original em preto e cobre: comandos, apresentação, tecnologias, projetos e contatos clicáveis. Versões próprias para computador e celular. Transição de entrada suave, texto sempre visível e cursor animado, respeitando a preferência por movimento reduzido.
 
 Regenerar: `python3 scripts/build_profile.py` (Pillow).
