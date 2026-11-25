@@ -1,12 +1,7 @@
 {
   "source": "https://github.com/users/samuelguedesss/contributions",
-  "updated": "2026-11-24",
+  "updated": "2026-11-25",
   "days": [
-    {
-      "date": "2025-11-25",
-      "level": 1,
-      "count": 1
-    },
     {
       "date": "2025-11-26",
       "level": 0,
@@ -1824,8 +1819,13 @@
     },
     {
       "date": "2026-11-24",
+      "level": 3,
+      "count": 12
+    },
+    {
+      "date": "2026-11-25",
       "level": 2,
-      "count": 11
+      "count": 8
     }
   ]
 }
